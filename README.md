@@ -7,3 +7,5 @@ This course serves as an introduction to modern web application development with
 [Part 0 - Fundamentals of Web apps](https://github.com/sergeisg/fullstackopen/tree/main/part0)
 
 [Part 1 - Introduction to React](https://github.com/sergeisg/fullstackopen/tree/main/part1)
+
+[Part 2 - Communicating with server](https://github.com/sergeisg/fullstackopen/tree/main/part2)
