@@ -1,4 +1,5 @@
 import Person from './Person'
+
 const Numbers = ({
     showList, 
     personsList, 
@@ -27,17 +28,5 @@ const Numbers = ({
     )
 }
 
-
-
-
 export default Numbers
 
-/*
-<>
-        <h3>Numbers</h3>
-        <ul>
-         {notesToShow.map(x=>
-         <li key={x.name}>{x.name} : {x.number}</li>)}
-        </ul>
-        </>
-*/

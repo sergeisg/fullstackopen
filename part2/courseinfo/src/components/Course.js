@@ -16,20 +16,6 @@ const Content = ({courses}) => {
     return courseList
   }
 
-  /*const Content = ({courses}) => {
-      const mappedCourses = courses.parts.map(x => <p key={x.id}>{x.name} {x.exercises}</p>)
-      return (
-          mappedCourses
-      )
-  }
-
-  const Total = ({courses}) => {
-      const totalExercises = courses.parts.reduce((sum, part) => sum + part.exercises, 0)
-      return (
-          <p>total of {totalExercises} exercises</p>
-          )
-  }*/
-
   const Course = ({courses}) => {
       return(
           <div>
