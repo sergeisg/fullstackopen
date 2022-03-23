@@ -9,3 +9,5 @@ This course serves as an introduction to modern web application development with
 [Part 1 - Introduction to React](https://github.com/sergeisg/fullstackopen/tree/main/part1)
 
 [Part 2 - Communicating with server](https://github.com/sergeisg/fullstackopen/tree/main/part2)
+
+[Part 3 - Programming a server with NodeJS and Express](https://github.com/sergeisg/fullstackopen/tree/main/part3)
