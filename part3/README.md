@@ -7,18 +7,18 @@ In this part our focus shifts towards the backend, that is, towards implementing
 ## Run the application locally
 
 ```
-# Navigate into the root directory 
+// Navigate into the root directory 
 $ cd phonebook-backend
 
 // Install the required dependencies
 npm install 
 
-//Create a .env file with your MONGODB_URI to connect with your mongodb database
+// Create a .env file with your MONGODB_URI to connect with your mongodb database
 echo "MONGODB_URI=<YOUR-MONGODB-URI>" > .env
 
-//Add the port the application will be using to the .env file
+// Add the port the application will be using to the .env file
 echo "PORT=<PORT NUMBER>" > .env
 
-//Run the application
+// Run the application
 npm start
 ```
