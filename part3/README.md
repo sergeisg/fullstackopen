@@ -8,7 +8,7 @@ In this part our focus shifts towards the backend, that is, towards implementing
 
 ```
 // Navigate into the root directory 
-$ cd phonebook-backend
+cd phonebook-backend
 
 // Install the required dependencies
 npm install 
