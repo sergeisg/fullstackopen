@@ -12,4 +12,15 @@ const totalLikes = (blogs) => {
     }
 }
 
-module.exports = { dummy, totalLikes }
+const favoriteBlog = (blogs) => {
+    if (blogs.length === 0) {
+        return {}
+    } else if (blogs.length === 1) {
+        return {...blogs[0]}
+    } else {
+        const favorite = blogs.reduce((prev, current) => (prev.likes > current.likes) ? prev : current)
+        return {title: favorite.title, author: favorite.author, likes: favorite.likes}
+    }
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog }

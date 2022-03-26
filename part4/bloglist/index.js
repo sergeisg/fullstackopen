@@ -3,12 +3,21 @@ const logger = require('./utils/logger')
 const http = require('http')
 const app = require('./app')
 const Blog = require('./models/blog')
+const listHelper = require('./utils/list_helper')
 
 app.get('/api/blogs', (request, response) => {
     Blog
         .find({})
         .then(blogs => {
             response.json(blogs)
+        })
+})
+
+app.get('/api/blogs/fav', (request, response) => {
+    Blog
+        .find({})
+        .then(blogs => {
+            response.json(listHelper.favoriteBlog(blogs))
         })
 })
 
