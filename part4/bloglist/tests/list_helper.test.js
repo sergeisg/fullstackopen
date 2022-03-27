@@ -2,6 +2,7 @@ const listHelper = require('../utils/list_helper')
 const totalLikes = require('../utils/list_helper').totalLikes
 const favoriteBlog = require('../utils/list_helper').favoriteBlog
 const mostBlogs = require('../utils/list_helper').mostBlogs
+const mostLikes = require('../utils/list_helper').mostLikes
 
 
 test('dummy returns one', () => {
@@ -69,6 +70,29 @@ describe('total likes', () => {
 
         test('when there are several blogs with several authors', () => {
             expect(mostBlogs(blogs)).toEqual({author: "Nick", blogs: 2})
+        })
+    })
+
+    describe('mostLikes', () => {
+
+        const singleAuthor = [{author:"Beth", likes: 9}]
+        const blogs = [
+            {author: "Layla", likes: 8},
+            {author: "Nick", likes: 10},
+            {author: "Nick", likes: 8},
+            {author: "Layla", likes: 9}
+        ]
+
+        test('when there are no blogs', () => {
+            expect(mostLikes([])).toEqual({})
+        })
+
+        test('when there is a single blog', () => {
+            expect(mostLikes(singleAuthor)).toEqual({author:"Beth", likes: 9})
+        })
+
+        test('when there are several blogs', () => {
+            expect(mostLikes(blogs)).toEqual({author: 'Nick', likes: 18})
         })
     })
 })

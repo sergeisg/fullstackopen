@@ -29,17 +29,40 @@ const mostBlogs = (blogs) => {
     if (blogs.length === 0) {
         return {}
     } else {
-        const authorHashMap = blogs
+        const reducedBlogs = blogs
             .map(blog => blog.author)
             .reduce((author, val) => {
                 author[val] = (author[val] || 0) + 1
                 return author
             }, {})
-        
-        const blogCount = Math.max(...Object.values(authorHashMap))
-        const blogAuthor = Object.keys(authorHashMap).filter(val => authorHashMap[val] === blogCount)
-        return { author: blogAuthor[0], blogs: blogCount }
+
+        const mostBlogsAuthor = 
+        Object.keys(reducedBlogs)
+            .map(key => ({author:key, blogs:reducedBlogs[key]}))
+            .reduce((prev, current) => (prev.blogs > current.blogs) ? prev : current)
+
+        return mostBlogsAuthor
     }
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }
+const mostLikes = (blogs) => {
+    if (blogs.length === 0) {
+        return {}
+    } else {
+
+        const reducedBlogs = blogs
+        .reduce((acc, blog) => ({
+            ...acc,
+            [blog.author]: (acc[blog.author] || 0) + blog.likes
+        }), {})
+
+        const mostLikesAuthor = 
+        Object.keys(reducedBlogs)
+            .map(key => ({author: key, likes:reducedBlogs[key]}))
+            .reduce((prev, current) => (prev.likes > current.likes) ? prev : current)
+        
+        return mostLikesAuthor
+    }
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes }

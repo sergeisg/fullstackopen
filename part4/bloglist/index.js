@@ -13,7 +13,15 @@ app.get('/api/blogs', (request, response) => {
         })
 })
 
-app.get('/api/blogs/most', (request, response) => {
+app.get('/api/blogs/mostlikes', (request, response) => {
+    Blog
+        .find({})
+        .then(blogs => {
+            response.json(listHelper.mostLikes(blogs))
+        })
+})
+
+app.get('/api/blogs/mostblogs', (request, response) => {
     Blog
         .find({})
         .then(blogs => {
