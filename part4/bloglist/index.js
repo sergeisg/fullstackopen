@@ -13,11 +13,11 @@ app.get('/api/blogs', (request, response) => {
         })
 })
 
-app.get('/api/blogs/fav', (request, response) => {
+app.get('/api/blogs/most', (request, response) => {
     Blog
         .find({})
         .then(blogs => {
-            response.json(listHelper.favoriteBlog(blogs))
+            response.json(listHelper.mostBlogs(blogs))
         })
 })
 

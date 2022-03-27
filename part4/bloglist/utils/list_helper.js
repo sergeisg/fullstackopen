@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 const dummy = (blogs) => {
     return 1
 }
@@ -23,4 +25,21 @@ const favoriteBlog = (blogs) => {
     }
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog }
+const mostBlogs = (blogs) => {
+    if (blogs.length === 0) {
+        return {}
+    } else {
+        const authorHashMap = blogs
+            .map(blog => blog.author)
+            .reduce((author, val) => {
+                author[val] = (author[val] || 0) + 1
+                return author
+            }, {})
+        
+        const blogCount = Math.max(...Object.values(authorHashMap))
+        const blogAuthor = Object.keys(authorHashMap).filter(val => authorHashMap[val] === blogCount)
+        return { author: blogAuthor[0], blogs: blogCount }
+    }
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }
