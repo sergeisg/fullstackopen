@@ -8,15 +8,15 @@ const api = supertest(app)
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    for (let blog of helper.initialNotes){
+    for (let blog of helper.initialBlogs){
         const blogObject = new Blog(blog)
         await blogObject.save()
     }
 })
 
-test('all notes are returned', async () => {
+test('all blogs are returned', async () => {
     const response = await api.get('/api/blogs')
-    expect(response.body).toHaveLength(helper.initialNotes.length)
+    expect(response.body).toHaveLength(helper.initialBlogs.length)
 })
 
 test('the blog post identifier is named id', async () => {
@@ -42,7 +42,7 @@ test('the POST request successfully creates a new blog post', async () => {
         .expect('Content-Type', /application\/json/)
 
     const response = await api.get('/api/blogs')
-    expect(response.body).toHaveLength(helper.initialNotes.length + 1)
+    expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
 
     const contents = response.body.map(r => r.title)
     expect(contents).toContain('mock title')
@@ -62,7 +62,7 @@ test('when the blog post lacks the likes property, it defaults to zero', async (
         .expect('Content-Type', /application\/json/)
 
     const response = await api.get('/api/blogs')
-    expect(response.body).toHaveLength(helper.initialNotes.length + 1)
+    expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
     const contents = response.body.map(r => r.likes)
     expect(contents).toContain(0)
 })
@@ -77,4 +77,19 @@ test('not providing a title and a url causes a 400 error', async() => {
         .post('/api/blogs')
         .send(newBlogPost)
         .expect(400)
+})
+
+test('deleting a specific blog post', async() => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+
+    await api
+        .delete(`/api/blogs/${blogToDelete.id}`)
+        .expect(204)
+    
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+
+    const contents = blogsAtEnd.map(b => b.title)
+    expect(contents).not.toContain(blogToDelete.title)
 })
