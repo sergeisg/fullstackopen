@@ -66,3 +66,15 @@ test('when the blog post lacks the likes property, it defaults to zero', async (
     const contents = response.body.map(r => r.likes)
     expect(contents).toContain(0)
 })
+
+test('not providing a title and a url causes a 400 error', async() => {
+    const newBlogPost = {
+        author: "mock author",
+        likes: 5
+    }
+
+    await api  
+        .post('/api/blogs')
+        .send(newBlogPost)
+        .expect(400)
+})
