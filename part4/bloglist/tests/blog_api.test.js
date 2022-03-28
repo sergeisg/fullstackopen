@@ -43,7 +43,26 @@ test('the POST request successfully creates a new blog post', async () => {
 
     const response = await api.get('/api/blogs')
     expect(response.body).toHaveLength(helper.initialNotes.length + 1)
-    
+
     const contents = response.body.map(r => r.title)
     expect(contents).toContain('mock title')
+})
+
+test('when the blog post lacks the likes property, it defaults to zero', async () => {
+    const newBlogPost = {
+        title: "mock title",
+        author: "mock author",
+        url: "mock url"
+    }
+
+    await api  
+        .post('/api/blogs')
+        .send(newBlogPost)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+    expect(response.body).toHaveLength(helper.initialNotes.length + 1)
+    const contents = response.body.map(r => r.likes)
+    expect(contents).toContain(0)
 })
