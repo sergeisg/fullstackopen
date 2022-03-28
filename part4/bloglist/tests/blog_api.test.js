@@ -93,3 +93,24 @@ test('deleting a specific blog post', async() => {
     const contents = blogsAtEnd.map(b => b.title)
     expect(contents).not.toContain(blogToDelete.title)
 })
+
+test('updating a specific blog post', async() => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const newBlogPost = { likes: 74 }
+
+    await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(newBlogPost)
+        .expect(200)
+    
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+    
+    const updatedBlog = await api
+        .get(`/api/blogs/${blogToUpdate.id}`)
+        .expect(200)
+    
+    expect(updatedBlog.body.likes).toBe(74)
+})
