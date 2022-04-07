@@ -92,6 +92,25 @@ describe('testing the blogs', () => {
                 .send(newBlogPost)
                 .expect(400)
         })
+        
+        test('blogs includes info on creator even if none is provided', async() => {
+            const newBlogPost = {
+                title: "mock title",
+                author: "mock author",
+                url: "mock url"
+            }
+
+            await api  
+                .post('/api/blogs')
+                .send(newBlogPost)
+                .expect(201)
+                .expect('Content-Type', /application\/json/)
+
+            const response = await api.get('/api/blogs')
+            expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
+            const contents = response.body.filter(blog => blog.title==="mock title")
+            expect(contents[0].user).not.toBe(undefined)
+        })
     
     })
     
