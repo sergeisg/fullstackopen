@@ -13,3 +13,5 @@ This course serves as an introduction to modern web application development with
 [Part 3 - Programming a server with NodeJS and Express](https://github.com/sergeisg/fullstackopen/tree/main/part3)
 
 [Part 4 - Testing Express servers, user administration](https://github.com/sergeisg/fullstackopen/tree/main/part4)
+
+[Part 5 - Testing React apps](https://github.com/sergeisg/fullstackopen/tree/main/part5)
