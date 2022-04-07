@@ -2,7 +2,11 @@ const { default: mongoose } = require('mongoose')
 const moongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-    username: String, 
+    username: {
+        type: String,
+        minlength: 3,
+        required: true
+    }, 
     name: String, 
     passwordHash: String
 })
