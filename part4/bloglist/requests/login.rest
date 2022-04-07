@@ -1,0 +1,10 @@
+post http://localhost:3003/api/blogs
+Content-Type: application/json 
+Authorization: bearer JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vY2siLCJpZCI6IjYyNGVhYjhkNjVkM2Y1ZWQ3ZmJkNzA3NCIsImlhdCI6MTY0OTMzMTIzNywiZXhwIjoxNjQ5MzM0ODM3fQ.PF0tX8hlPKUN1lAsBPY8CVw4v3wL4DeO5Dbj2B89Ync
+
+{
+    "title": "supermock2",
+    "author": "mock",
+    "url": "mock",
+    "likes": 6
+}
