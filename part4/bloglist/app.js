@@ -1,5 +1,6 @@
 const config = require('./utils/config')
 const logger = require('./utils/logger')
+const middleware = require('./utils/middleware')
 require('express-async-errors')
 const express = require('express')
 const app = express()
@@ -25,15 +26,6 @@ app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
-const errorHandler = (error, request, response, next) => {
-    if (error.name === 'ValidationError') {
-        return response.status(400).json({error: error.message})
-    } else if (error.name === 'JsonWebTokenError') {
-        return response.status(401).json({error: 'invalid token'})
-    } else if (error.name === 'TokenExpiredError') {
-        return response.status(401).json({error: 'token expired'})
-    }
-}
-app.use(errorHandler)
+app.use(middleware.errorHandler)
 
 module.exports = app
