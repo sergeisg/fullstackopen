@@ -5,6 +5,9 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [blogTitle, setBlogTitle] = useState('')
+  const [blogAuthor, setBlogAuthor] = useState('')
+  const [blogUrl, setBlogUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
@@ -32,6 +35,7 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      blogService.setToken(user.token)
       window.localStorage.setItem('logged user', JSON.stringify(user))
     } catch (exception) {
       setErrorMessage('Wrong credentials')
@@ -68,16 +72,6 @@ const App = () => {
       </form>
   )
 
-  /*const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <input
-      value={newBlog}
-      onChange={handleBlogChange}
-      />
-      <button type="submit">save</button>
-    </form>
-  )*/
-
   const blogList = () => (
     <div>
       <h2>Blog list</h2>
@@ -87,6 +81,47 @@ const App = () => {
     </div>
   )
 
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+      <h2>Add a new blog</h2>
+
+      <div>title <input
+      type="text"
+      value={blogTitle}
+      name="title"
+      onChange={({target}) => setBlogTitle(target.value)}
+      /></div>
+
+      <div>author <input
+      type="text"
+      value={blogAuthor}
+      name="author"
+      onChange={({target}) => setBlogAuthor(target.value)}
+      /></div>
+
+      <div>url <input
+      type="text"
+      value={blogUrl}
+      name="url"
+      onChange={({target}) => setBlogUrl(target.value)}
+      /></div>
+
+      <button type="submit">save blog</button>
+
+    </form>
+  )
+
+  const addBlog = (event) => {
+    event.preventDefault()
+    const newBlog = {
+      title: blogTitle,
+      author: blogAuthor,
+      url: blogUrl
+    }
+    blogService.setToken(user.token)
+    blogService.create(newBlog).then(returnedBlog => {setBlogs(blogs.concat(returnedBlog))})
+  }
+  
   return (
     <div>
       <h1>Blogs</h1>
@@ -96,6 +131,7 @@ const App = () => {
       : <div>
         <p>{user.name} logged in</p>
         <button type="button" onClick={handleClick}>logout</button>
+        {blogForm()}
         {blogList()}
         </div>}
     </div>
