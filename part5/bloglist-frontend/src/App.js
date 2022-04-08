@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -12,6 +13,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
+  const [messageStyle, setMessageStyle] = useState(true)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -29,7 +31,6 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('logging in with', username, password)
     try {
       const user = await loginService.login({username, password})
       setUser(user)
@@ -37,14 +38,22 @@ const App = () => {
       setPassword('')
       blogService.setToken(user.token)
       window.localStorage.setItem('logged user', JSON.stringify(user))
+      setErrorMessage(`${username} logged in`)
+      setMessageStyle(true)
+      setTimeout(() => {setErrorMessage(null)}, 3500)
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
-      setTimeout(() => {setErrorMessage(null)}, 5000)
+      console.log('in catch')
+      setErrorMessage('Wrong user or password')
+      setMessageStyle(false)
+      setTimeout(() => {setErrorMessage(null)}, 3500)
     }
   }
 
   const handleClick = (event) => {
     event.preventDefault()
+    setErrorMessage(`${user.username} logged out`)
+    setMessageStyle(false)
+    setTimeout(() => {setErrorMessage(null)}, 3500)
     setUser(null)
     window.localStorage.clear()
   }
@@ -120,11 +129,16 @@ const App = () => {
     }
     blogService.setToken(user.token)
     blogService.create(newBlog).then(returnedBlog => {setBlogs(blogs.concat(returnedBlog))})
+    setErrorMessage(`New blog ${newBlog.title} by ${newBlog.author} created`)
+    setMessageStyle(true)
+    setTimeout(() => {setErrorMessage(null)}, 3500)
   }
   
   return (
     <div>
       <h1>Blogs</h1>
+
+      {errorMessage === null ? '' : <Notification notification={errorMessage} displayStyle={messageStyle} />}
 
       {user === null 
       ? loginForm()
