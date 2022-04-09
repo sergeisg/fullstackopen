@@ -13,12 +13,12 @@ const loginRouter = require('./controllers/login')
 logger.info(`connecting to ${config.MONGODB_URI}`)
 
 mongoose.connect(config.MONGODB_URI)
-    .then(() => {
-        logger.info('connected')
-    })
-    .catch((error) => {
-        logger.error('error connecting', error.message)
-    })
+  .then(() => {
+    logger.info('connected')
+  })
+  .catch((error) => {
+    logger.error('error connecting', error.message)
+  })
 
 app.use(cors())
 app.use(express.json())
