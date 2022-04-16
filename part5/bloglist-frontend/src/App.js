@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import AddBlog from './components/AddBlog'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -14,6 +15,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
   const [messageStyle, setMessageStyle] = useState(true)
+  const [addBlogVisible, setAddBlogVisible ] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -90,35 +92,35 @@ const App = () => {
     </div>
   )
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <h2>Add a new blog</h2>
+  const blogForm = () => {
 
-      <div>title <input
-      type="text"
-      value={blogTitle}
-      name="title"
-      onChange={({target}) => setBlogTitle(target.value)}
-      /></div>
+    
+      const hideWhenVisible = { display: addBlogVisible ? 'none' : ''}
+      const showWhenVisible = { display: addBlogVisible ? '' : 'none'}
 
-      <div>author <input
-      type="text"
-      value={blogAuthor}
-      name="author"
-      onChange={({target}) => setBlogAuthor(target.value)}
-      /></div>
+  return (
+    <div>
 
-      <div>url <input
-      type="text"
-      value={blogUrl}
-      name="url"
-      onChange={({target}) => setBlogUrl(target.value)}
-      /></div>
+    <div style={hideWhenVisible}>
+      <button onClick={(() => setAddBlogVisible(true))}>new blog</button>
+    </div>
 
-      <button type="submit">save blog</button>
+    <div style={showWhenVisible}>
+    <AddBlog 
+    blogAdd={addBlog}
+    titleBlog={blogTitle}
+    authorBlog={blogAuthor}
+    urlBlog={blogUrl}
+    setTitleBlog={setBlogTitle}
+    setAuthorBlog={setBlogAuthor}
+    setUrlBlog={setBlogUrl}
+    />
+    <button onClick={(() => setAddBlogVisible(false))}>cancel</button>
+    </div>
 
-    </form>
-  )
+    </div>
+    )
+  }
 
   const addBlog = (event) => {
     event.preventDefault()
