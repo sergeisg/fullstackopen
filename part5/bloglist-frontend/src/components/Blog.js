@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({blog, blogList, setBlogs}) => {
+const Blog = ({blog, blogList, setBlogs, currentUser}) => {
 
   const [showDetails, setShowDetails] = useState(false)
+  const showWhenVisible = { display: showDetails ? '' : 'none' }
 
   const blogStyle = {
     paddingTop: 10,
@@ -12,7 +13,6 @@ const Blog = ({blog, blogList, setBlogs}) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  const showWhenVisible = { display: showDetails ? '' : 'none' }
 
   const handleVisibility = (event) => {
     event.preventDefault()
@@ -23,9 +23,23 @@ const Blog = ({blog, blogList, setBlogs}) => {
     event.preventDefault()
     const newLikes = blog.likes +=1
     const blogs = await blogList
-    blogService.update(blog.id, newLikes).then(updatedBlog => {
-      setBlogs(blogs.map(x => x.id === blog.id ? updatedBlog : x))
-    })
+    const updatedBlog = await blogService.update(blog.id, newLikes)
+    setBlogs(blogs.map(x => x.id === blog.id ? updatedBlog : x))
+    const sortedBlogs = blogs.sort((a,b) => b.likes - a.likes)
+    setBlogs(sortedBlogs)
+  }
+
+  const removeBlog = async (event) => {
+    event.preventDefault()
+    const blogs = await blogList
+    blogService.setToken(currentUser.token)
+   
+    if(confirm(`Deleting ${blog.title} by ${blog.author}`)){
+        await blogService.remove(blog.id)
+        setBlogs(blogs.filter(x => x.id !== blog.id))
+    } else {
+      return 
+    }
   }
   
   return (
@@ -35,6 +49,7 @@ const Blog = ({blog, blogList, setBlogs}) => {
       <p>{blog.url}</p>
       <p>Likes {blog.likes} <button onClick={handleLikes}>like</button></p>
       <p>{blog.user.name}</p>
+      {currentUser.username === blog.user.username ? <button onClick={removeBlog}>remove</button> : ''}
     </div>
   </div>  
 )}
