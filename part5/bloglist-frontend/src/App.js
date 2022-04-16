@@ -4,11 +4,14 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
 import AddBlog from './components/AddBlog'
+import LoginForm from './components/LoginForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [blogTitle, setBlogTitle] = useState('')
   const [blogAuthor, setBlogAuthor] = useState('')
+  const [blogLikes, setBlogLikes] = useState('')
+  const [blogUser, setBlogUser] = useState('')
   const [blogUrl, setBlogUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -60,29 +63,17 @@ const App = () => {
     window.localStorage.clear()
   }
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({target}) => setUsername(target.value)} />
-        </div>
-        <div>
-          password
-          <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({target}) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-  )
-
+  const loginForm = () => { 
+    return (
+      <LoginForm 
+        loginHandle={handleLogin}
+        userName={username}
+        passWord={password}
+        setUserName={setUsername}
+        setPassWord={setPassword}
+      />
+    )}
+    
   const blogList = () => (
     <div>
       <h2>Blog list</h2>
@@ -94,7 +85,6 @@ const App = () => {
 
   const blogForm = () => {
 
-    
       const hideWhenVisible = { display: addBlogVisible ? 'none' : ''}
       const showWhenVisible = { display: addBlogVisible ? '' : 'none'}
 
@@ -127,8 +117,11 @@ const App = () => {
     const newBlog = {
       title: blogTitle,
       author: blogAuthor,
-      url: blogUrl
+      url: blogUrl,
+      likes: blogLikes,
+      user: blogUser
     }
+    console.log(newBlog)
     blogService.setToken(user.token)
     blogService.create(newBlog).then(returnedBlog => {setBlogs(blogs.concat(returnedBlog))})
     setErrorMessage(`New blog ${newBlog.title} by ${newBlog.author} created`)
