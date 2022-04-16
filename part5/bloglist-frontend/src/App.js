@@ -11,7 +11,7 @@ const App = () => {
   const [blogTitle, setBlogTitle] = useState('')
   const [blogAuthor, setBlogAuthor] = useState('')
   const [blogLikes, setBlogLikes] = useState('')
-  const [blogUser, setBlogUser] = useState('')
+  const [blogUser, setBlogUser] = useState({})
   const [blogUrl, setBlogUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -78,7 +78,7 @@ const App = () => {
     <div>
       <h2>Blog list</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} blogList={blogs} setBlogs={setBlogs}/>
       )}
     </div>
   )
