@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({blog, blogList, setBlogs, currentUser}) => {
+const Blog = ({ blog, blogList, setBlogs, currentUser }) => {
 
   const [showDetails, setShowDetails] = useState(false)
   const showWhenVisible = { display: showDetails ? '' : 'none' }
@@ -33,25 +33,25 @@ const Blog = ({blog, blogList, setBlogs, currentUser}) => {
     event.preventDefault()
     const blogs = await blogList
     blogService.setToken(currentUser.token)
-   
+
     if(confirm(`Deleting ${blog.title} by ${blog.author}`)){
-        await blogService.remove(blog.id)
-        setBlogs(blogs.filter(x => x.id !== blog.id))
+      await blogService.remove(blog.id)
+      setBlogs(blogs.filter(x => x.id !== blog.id))
     } else {
-      return 
+      return
     }
   }
-  
+
   return (
-  <div style={blogStyle}>
-    {blog.title} by {blog.author} <button onClick={handleVisibility}>{showDetails ? 'hide' : 'view'}</button>
-    <div style={showWhenVisible}>
-      <p>{blog.url}</p>
-      <p>Likes {blog.likes} <button onClick={handleLikes}>like</button></p>
-      <p>{blog.user.name}</p>
-      {currentUser.username === blog.user.username ? <button onClick={removeBlog}>remove</button> : ''}
+    <div style={blogStyle}>
+      {blog.title} by {blog.author} <button onClick={handleVisibility}>{showDetails ? 'hide' : 'view'}</button>
+      <div style={showWhenVisible}>
+        <p>{blog.url}</p>
+        <p>Likes {blog.likes} <button onClick={handleLikes}>like</button></p>
+        <p>{blog.user.name}</p>
+        {currentUser.username === blog.user.username ? <button onClick={removeBlog}>remove</button> : ''}
+      </div>
     </div>
-  </div>  
-)}
+  )}
 
 export default Blog

@@ -10,8 +10,8 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [blogTitle, setBlogTitle] = useState('')
   const [blogAuthor, setBlogAuthor] = useState('')
-  const [blogLikes, setBlogLikes] = useState('')
-  const [blogUser, setBlogUser] = useState({})
+  const [blogLikes, setBlogLikes] = useState('') //eslint-disable-line no-unused-vars
+  const [blogUser, setBlogUser] = useState({}) //eslint-disable-line no-unused-vars
   const [blogUrl, setBlogUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -21,10 +21,10 @@ const App = () => {
   const [addBlogVisible, setAddBlogVisible ] = useState(false)
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>{
-        const sortedBlogs = blogs.sort((a,b) => b.likes - a.likes)
-        setBlogs(sortedBlogs)
-    })  
+    blogService.getAll().then(blogs => {
+      const sortedBlogs = blogs.sort((a,b) => b.likes - a.likes)
+      setBlogs(sortedBlogs)
+    })
   }, [])
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const user = await loginService.login({username, password})
+      const user = await loginService.login({ username, password })
       setUser(user)
       setUsername('')
       setPassword('')
@@ -64,9 +64,9 @@ const App = () => {
     window.localStorage.clear()
   }
 
-  const loginForm = () => { 
+  const loginForm = () => {
     return (
-      <LoginForm 
+      <LoginForm
         loginHandle={handleLogin}
         userName={username}
         passWord={password}
@@ -74,7 +74,7 @@ const App = () => {
         setPassWord={setPassword}
       />
     )}
-    
+
   const blogList = () => (
     <div>
       <h2>Blog list</h2>
@@ -86,30 +86,30 @@ const App = () => {
 
   const blogForm = () => {
 
-      const hideWhenVisible = { display: addBlogVisible ? 'none' : ''}
-      const showWhenVisible = { display: addBlogVisible ? '' : 'none'}
+    const hideWhenVisible = { display: addBlogVisible ? 'none' : '' }
+    const showWhenVisible = { display: addBlogVisible ? '' : 'none' }
 
-  return (
-    <div>
+    return (
+      <div>
 
-    <div style={hideWhenVisible}>
-      <button onClick={(() => setAddBlogVisible(true))}>new blog</button>
-    </div>
+        <div style={hideWhenVisible}>
+          <button onClick={(() => setAddBlogVisible(true))}>new blog</button>
+        </div>
 
-    <div style={showWhenVisible}>
-    <AddBlog 
-    blogAdd={addBlog}
-    titleBlog={blogTitle}
-    authorBlog={blogAuthor}
-    urlBlog={blogUrl}
-    setTitleBlog={setBlogTitle}
-    setAuthorBlog={setBlogAuthor}
-    setUrlBlog={setBlogUrl}
-    />
-    <button onClick={(() => setAddBlogVisible(false))}>cancel</button>
-    </div>
+        <div style={showWhenVisible}>
+          <AddBlog
+            blogAdd={addBlog}
+            titleBlog={blogTitle}
+            authorBlog={blogAuthor}
+            urlBlog={blogUrl}
+            setTitleBlog={setBlogTitle}
+            setAuthorBlog={setBlogAuthor}
+            setUrlBlog={setBlogUrl}
+          />
+          <button onClick={(() => setAddBlogVisible(false))}>cancel</button>
+        </div>
 
-    </div>
+      </div>
     )
   }
 
@@ -129,20 +129,20 @@ const App = () => {
     setMessageStyle(true)
     setTimeout(() => {setErrorMessage(null)}, 3500)
   }
-  
+
   return (
     <div>
       <h1>Blogs</h1>
 
       {errorMessage === null ? '' : <Notification notification={errorMessage} displayStyle={messageStyle} />}
 
-      {user === null 
-      ? loginForm()
-      : <div>
-        <p>{user.name} logged in</p>
-        <button type="button" onClick={handleClick}>logout</button>
-        {blogForm()}
-        {blogList()}
+      {user === null
+        ? loginForm()
+        : <div>
+          <p>{user.name} logged in</p>
+          <button type="button" onClick={handleClick}>logout</button>
+          {blogForm()}
+          {blogList()}
         </div>}
     </div>
   )

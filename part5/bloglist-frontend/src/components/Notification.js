@@ -1,17 +1,17 @@
 import '../index.css'
 
-const Notification = ({notification, displayStyle}) => {
+const Notification = ({ notification, displayStyle }) => {
 
-    if (notification === null){
-        return null
-    } 
+  if (notification === null){
+    return null
+  }
 
-    let className = displayStyle ? 'green' : 'red'
-    return (
+  let className = displayStyle ? 'green' : 'red'
+  return (
     <div className={className}>
-        {notification}
+      {notification}
     </div>
-    )
+  )
 }
 
 export default Notification
