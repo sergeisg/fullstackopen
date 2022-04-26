@@ -64,6 +64,15 @@ const App = () => {
     window.localStorage.clear()
   }
 
+  const handleLikes = async (event, blog) => {
+    event.preventDefault()
+    const newLikes = blog.likes +=1
+    const updatedBlog = await blogService.update(blog.id, newLikes)
+    setBlogs(blogs.map(x => x.id === blog.id ? updatedBlog : x))
+    const sortedBlogs = blogs.sort((a,b) => b.likes - a.likes)
+    setBlogs(sortedBlogs)
+  }
+
   const loginForm = () => {
     return (
       <LoginForm
@@ -79,7 +88,7 @@ const App = () => {
     <div>
       <h2>Blog list</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} blogList={blogs} setBlogs={setBlogs} currentUser={user}/>
+        <Blog key={blog.id} blog={blog} blogList={blogs} setBlogs={setBlogs} currentUser={user} likeHandler={(e) => handleLikes(e, blog)}/>
       )}
     </div>
   )

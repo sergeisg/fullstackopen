@@ -59,6 +59,35 @@ describe('blog component test', () => {
         expect(blogUrl).toBeVisible()
         const blogLikes = container.querySelector('#blogLikes')
         expect(blogLikes).toBeVisible()
+    }),
+    test('event handler is called twice after two clicks', () => {
+
+        const currentUser = {
+            username: 'mock',
+            name: 'Mock'
+        }
+
+        const blog = {
+            title: 'mock title',
+            author: 'mock author',
+            url: 'mock url',
+            user: {
+                username: 'mock',
+                name: 'Mock'
+            }
+        }
+
+        const mockHandler = jest.fn()
+
+        const {container} = render(<Blog blog={blog} currentUser={currentUser} likeHandler={mockHandler}/>)
+        const buttonView = screen.getByText('view')
+        userEvent.click(buttonView)
+        const buttonLike = container.querySelector('#likeButton')
+        userEvent.click(buttonLike)
+        userEvent.click(buttonLike)
+        expect(mockHandler.mock.calls).toHaveLength
+        
     })
+
 
 })
