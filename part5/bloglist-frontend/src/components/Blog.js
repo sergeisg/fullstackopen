@@ -43,11 +43,11 @@ const Blog = ({ blog, blogList, setBlogs, currentUser }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {blog.title} by {blog.author} <button onClick={handleVisibility}>{showDetails ? 'hide' : 'view'}</button>
-      <div style={showWhenVisible}>
-        <p>{blog.url}</p>
-        <p>Likes {blog.likes} <button onClick={handleLikes}>like</button></p>
+      <div style={showWhenVisible} className='togglableContent'>
+        <p id="blogUrl">{blog.url}</p>
+        <p id="blogLikes">Likes {blog.likes} <button onClick={handleLikes}>like</button></p>
         <p>{blog.user.name}</p>
         {currentUser.username === blog.user.username ? <button onClick={removeBlog}>remove</button> : ''}
       </div>
