@@ -51,7 +51,7 @@ const App = () => {
       console.log('in catch')
       setErrorMessage('Wrong user or password')
       setMessageStyle(false)
-      setTimeout(() => {setErrorMessage(null)}, 3500)
+      setTimeout(() => {setErrorMessage(null)}, 6500)
     }
   }
 
@@ -134,7 +134,7 @@ const App = () => {
         ? loginForm()
         : <div>
           <p>{user.name} logged in</p>
-          <button type="button" onClick={handleClick}>logout</button>
+          <button type="button" id='logout-button' onClick={handleClick}>logout</button>
           {blogForm()}
           {blogList()}
         </div>}
