@@ -8,11 +8,11 @@ import LoginForm from './components/LoginForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [blogTitle, setBlogTitle] = useState('')
+  /*const [blogTitle, setBlogTitle] = useState('')
   const [blogAuthor, setBlogAuthor] = useState('')
-  const [blogLikes, setBlogLikes] = useState('') //eslint-disable-line no-unused-vars
-  const [blogUser, setBlogUser] = useState({}) //eslint-disable-line no-unused-vars
   const [blogUrl, setBlogUrl] = useState('')
+  const [blogLikes, setBlogLikes] = useState('') //eslint-disable-line no-unused-vars
+  const [blogUser, setBlogUser] = useState({}) //eslint-disable-line no-unused-vars*/
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
@@ -106,15 +106,7 @@ const App = () => {
         </div>
 
         <div style={showWhenVisible}>
-          <AddBlog
-            blogAdd={addBlog}
-            titleBlog={blogTitle}
-            authorBlog={blogAuthor}
-            urlBlog={blogUrl}
-            setTitleBlog={setBlogTitle}
-            setAuthorBlog={setBlogAuthor}
-            setUrlBlog={setBlogUrl}
-          />
+          <AddBlog blogAdd={addBlog} />
           <button onClick={(() => setAddBlogVisible(false))}>cancel</button>
         </div>
 
@@ -122,21 +114,22 @@ const App = () => {
     )
   }
 
-  const addBlog = (event) => {
-    event.preventDefault()
-    const newBlog = {
-      title: blogTitle,
-      author: blogAuthor,
-      url: blogUrl,
-      likes: blogLikes,
-      user: blogUser
+  const addBlog = (blogObject) => {
+
+    try {
+
+      const newBlog = { ...blogObject, user: user }
+      console.log(newBlog)
+      blogService.setToken(user.token)
+      blogService.create(newBlog).then(returnedBlog => {setBlogs(blogs.concat(returnedBlog))})
+      setErrorMessage(`New blog ${newBlog.title} by ${newBlog.author} created`)
+      setMessageStyle(true)
+      setTimeout(() => {setErrorMessage(null)}, 3500)
+
+    } catch (error) {
+      alert(error)
     }
-    console.log(newBlog)
-    blogService.setToken(user.token)
-    blogService.create(newBlog).then(returnedBlog => {setBlogs(blogs.concat(returnedBlog))})
-    setErrorMessage(`New blog ${newBlog.title} by ${newBlog.author} created`)
-    setMessageStyle(true)
-    setTimeout(() => {setErrorMessage(null)}, 3500)
+
   }
 
   return (

@@ -1,35 +1,45 @@
-const AddBlog = ({
-  titleBlog,
-  setTitleBlog,
-  authorBlog,
-  setAuthorBlog,
-  urlBlog,
-  setUrlBlog,
-  blogAdd
-}) => {
+import { useState } from 'react'
+
+const AddBlog = ({ blogAdd }) => {
+
+  const [blogTitle, setBlogTitle] = useState('')
+  const [blogAuthor, setBlogAuthor] = useState('')
+  const [blogUrl, setBlogUrl] = useState('')
+  const [blogLikes, setBlogLikes] = useState('') //eslint-disable-line no-unused-vars
+
+  const createBlog = (event) => {
+    event.preventDefault()
+    blogAdd({
+      title: blogTitle,
+      author: blogAuthor,
+      url: blogUrl,
+      likes: blogLikes
+    })
+  }
+
   return (
-    <form onSubmit={blogAdd}>
+    <form onSubmit={createBlog}>
       <h2>Add a new blog</h2>
 
       <div>title <input
         type="text"
-        value={titleBlog}
+        value={blogTitle}
         name="title"
-        onChange={({ target }) => setTitleBlog(target.value)}
+        onChange={({ target }) => setBlogTitle(target.value)}
       /></div>
 
       <div>author <input
         type="text"
-        value={authorBlog}
+        value={blogAuthor}
         name="author"
-        onChange={({ target }) => setAuthorBlog(target.value)}
+        onChange={({ target }) => setBlogAuthor(target.value)}
       /></div>
 
       <div>url <input
         type="text"
-        value={urlBlog}
+        value={blogUrl}
         name="url"
-        onChange={({ target }) => setUrlBlog(target.value)}
+        onChange={({ target }) => setBlogUrl(target.value)}
       /></div>
 
       <button type="submit">create</button>
