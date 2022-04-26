@@ -115,21 +115,13 @@ const App = () => {
   }
 
   const addBlog = (blogObject) => {
-
-    try {
-
-      const newBlog = { ...blogObject, user: user }
-      console.log(newBlog)
-      blogService.setToken(user.token)
-      blogService.create(newBlog).then(returnedBlog => {setBlogs(blogs.concat(returnedBlog))})
-      setErrorMessage(`New blog ${newBlog.title} by ${newBlog.author} created`)
-      setMessageStyle(true)
-      setTimeout(() => {setErrorMessage(null)}, 3500)
-
-    } catch (error) {
-      alert(error)
-    }
-
+    const newBlog = { ...blogObject, user: user }
+    console.log(newBlog)
+    blogService.setToken(user.token)
+    blogService.create(newBlog).then(returnedBlog => {setBlogs(blogs.concat(returnedBlog))})
+    setErrorMessage(`New blog ${newBlog.title} by ${newBlog.author} created`)
+    setMessageStyle(true)
+    setTimeout(() => {setErrorMessage(null)}, 3500)
   }
 
   return (
