@@ -8,11 +8,6 @@ import LoginForm from './components/LoginForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  /*const [blogTitle, setBlogTitle] = useState('')
-  const [blogAuthor, setBlogAuthor] = useState('')
-  const [blogUrl, setBlogUrl] = useState('')
-  const [blogLikes, setBlogLikes] = useState('') //eslint-disable-line no-unused-vars
-  const [blogUser, setBlogUser] = useState({}) //eslint-disable-line no-unused-vars*/
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
@@ -102,7 +97,7 @@ const App = () => {
       <div>
 
         <div style={hideWhenVisible}>
-          <button onClick={(() => setAddBlogVisible(true))}>new blog</button>
+          <button id='new-blog-button' onClick={(() => setAddBlogVisible(true))}>new blog</button>
         </div>
 
         <div style={showWhenVisible}>
