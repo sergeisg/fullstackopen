@@ -23,3 +23,19 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
+Cypress.Commands.add('clearBlog', ({ titleId, authorId, urlId }) => {
+    cy.get(titleId).clear()
+    cy.get(authorId).clear()
+    cy.get(urlId).clear()
+})
+
+Cypress.Commands.add('newBlog', ({ title, author, url }) => {
+  cy.clearBlog({titleId: '#title', authorId: '#author', urlId: '#url'})
+  cy.get('#title').type(title)
+  cy.get('#author').type(author)
+  cy.get('#url').type(url)
+  cy.get('#create-blog').click()
+})
+
