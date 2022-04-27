@@ -45,14 +45,21 @@ describe('Blog app', function() {
             cy.get('#password').type('mock')
             cy.get('#login-button').click()
         })
-    it('a blog can be created', function(){
-        cy.get('#new-blog-button').click()
-        cy.get('#title').type('cypress test')
-        cy.get('#author').type('cypress test')
-        cy.get('#url').type('cypress test')
-        cy.get('#create-blog').click()
-        cy.contains('cypress test')
-    })
+        it('a blog can be created', function(){
+            cy.get('#new-blog-button').click()
+            cy.get('#title').type('cypress test')
+            cy.get('#author').type('cypress test')
+            cy.get('#url').type('cypress test')
+            cy.get('#create-blog').click()
+            cy.contains('cypress test')
+        })
+        it('a blog can be liked', function(){
+            cy.get('.blog').contains('Blog 2 by Dexter Morgan').contains('view').click().then(() => {
+                cy.get('.togglableContent').contains('7').get('#likeButton').click().then(() => {
+                    cy.get('.togglableContent').contains('8')
+                })
+            })
+        })
     })
   })
 

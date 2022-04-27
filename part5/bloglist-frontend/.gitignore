@@ -1,3 +1,5 @@
 node_modules
 .eslintcache
 .env
+cypress/videos
+cypress/screenshots

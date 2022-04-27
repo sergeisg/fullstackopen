@@ -19,16 +19,6 @@ const Blog = ({ blog, blogList, setBlogs, currentUser, likeHandler }) => {
     showDetails ? setShowDetails(false) : setShowDetails(true)
   }
 
-  /*const handleLikes = async (event) => {
-    event.preventDefault()
-    const blogs = await blogList
-    const newLikes = blog.likes +=1
-    const updatedBlog = await blogService.update(blog.id, newLikes)
-    setBlogs(blogs.map(x => x.id === blog.id ? updatedBlog : x))
-    const sortedBlogs = blogs.sort((a,b) => b.likes - a.likes)
-    setBlogs(sortedBlogs)
-  }*/
-
   const removeBlog = async (event) => {
     event.preventDefault()
     const blogs = await blogList
@@ -44,7 +34,7 @@ const Blog = ({ blog, blogList, setBlogs, currentUser, likeHandler }) => {
 
   return (
     <div style={blogStyle} className='blog'>
-      {blog.title} by {blog.author} <button onClick={handleVisibility}>{showDetails ? 'hide' : 'view'}</button>
+      {blog.title} by {blog.author} <button id='view-button' onClick={handleVisibility}>{showDetails ? 'hide' : 'view'}</button>
       <div style={showWhenVisible} className='togglableContent'>
         <p id="blogUrl">{blog.url}</p>
         <p id="blogLikes">Likes {blog.likes} <button id="likeButton" onClick={likeHandler}>like</button></p>
