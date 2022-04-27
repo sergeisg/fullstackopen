@@ -54,11 +54,21 @@ describe('Blog app', function() {
             cy.contains('cypress test')
         })
         it('a blog can be liked', function(){
-            cy.get('.blog').contains('Blog 2 by Dexter Morgan').contains('view').click().then(() => {
-                cy.get('.togglableContent').contains('7').get('#likeButton').click().then(() => {
-                    cy.get('.togglableContent').contains('8')
+            cy.get('.blog').contains('cypress test by cypress test').contains('view').click().then(() => {
+                cy.get('.togglableContent').contains('0').get('#likeButton').click().then(() => {
+                    cy.get('.togglableContent').contains('1')
                 })
             })
+        })
+        it('a blog can be deleted', function(){
+            cy.visit('http://localhost:3000')
+            cy.get('#username').type('mock')
+            cy.get('#password').type('mock')
+            cy.get('#login-button').click()
+            cy.get('.blog').contains('cypress test by cypress test').contains('view').click().then(() => {
+                cy.get('.togglableContent').get('#remove-button').click()
+            })
+            cy.get('html').should('not.contain','cypress test by cypress test')
         })
     })
   })
