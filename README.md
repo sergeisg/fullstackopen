@@ -15,3 +15,5 @@ This course serves as an introduction to modern web application development with
 [Part 4 - Testing Express servers, user administration](https://github.com/sergeisg/fullstackopen/tree/main/part4)
 
 [Part 5 - Testing React apps](https://github.com/sergeisg/fullstackopen/tree/main/part5)
+
+[Part 6 - State management with Redux](https://github.com/sergeisg/fullstackopen/tree/main/part6)
