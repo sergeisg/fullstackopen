@@ -4,9 +4,14 @@ import { voteNewAnecdoteNotification, hideNotification } from '../reducers/notif
 
 
 const AnecdoteList = () => {
-
     const dispatch = useDispatch()
-    const anecdotes = useSelector(state => state.anecdotes)
+    const anecdotes = useSelector(state => {
+        if (state.filter.length > 2) {
+            return state.anecdotes.filter(n => n.content.includes(state.filter))
+        } else {
+            return state.anecdotes
+        }
+    })
     const sortedAnecdotes = [...anecdotes].sort((a,b) => b.votes - a.votes)
 
     const vote = (id) => {
