@@ -30,4 +30,11 @@ export const initializeAnecdotes = () => {
     anecdotes.forEach(anecdote => dispatch(appendAnecdote(anecdote)))
   }
 }
+
+export const newAnecdote = anecdote => {
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.createNew(anecdote)
+    dispatch(appendAnecdote(newAnecdote))
+  }
+}
 export default reducer
