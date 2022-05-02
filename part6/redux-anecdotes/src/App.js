@@ -5,7 +5,7 @@ import Filter from './components/Filter'
 import anecdoteService from './services/anecdotes'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setAnecdotes, appendAnecdote } from './reducers/anecdoteReducer'
+import { appendAnecdote } from './reducers/anecdoteReducer'
 
 
 const App = () => {
